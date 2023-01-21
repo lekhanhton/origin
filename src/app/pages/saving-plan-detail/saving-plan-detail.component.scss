@@ -1,0 +1,127 @@
+.saving-plan-detail {
+  margin: 0 auto;
+  max-width: 560px;
+
+  .detail__welcome {
+    text-align: center;
+    color: #1B31A8;
+    margin-top: 48px;
+    font-size: 20px;
+  }
+
+  .detail__block {
+    margin-top: 24px;
+    padding: 35px 40px 40px;
+    background: #FFFFFF;
+    box-shadow: 0 16px 32px rgba(30, 42, 50, 0.08);
+    border-radius: 8px;
+    .detail__block--name {
+      font-family: 'Rubik', sans-serif;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    .detail__block--name-tag {
+      color: #708797;
+      font-size: 16px;
+    }
+  }
+
+  .detail__input {
+    margin-top: 28px;
+  }
+
+  .detail__reach-date--chosen {
+    margin-top: 4px;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 56px;
+    border: 1px solid #E9EEF2;
+    border-radius: 4px;
+    position: relative;
+    .origin-date-picker {
+      position: absolute;
+      left: 0;
+      z-index: -10;
+      opacity: 0;
+    }
+    .change-month-disabled {
+      cursor: default;
+      opacity: 0;
+      z-index: -10;
+    }
+  }
+
+  .detail__reach-date--chosen:hover {
+    border-color: #40A9FF;
+  }
+
+  .detail__reach-date--chosen.focus {
+    box-shadow: 0 0 0 2px rgb(24 144 255 / 20%);
+  }
+
+  .detail__monthly-amount {
+    margin-top: 24px;
+    padding: 24px 32px;
+    border: 1px solid #E9EEF2;
+    border-bottom: none;
+    border-top-left-radius: 8px;
+    border-top-right-radius:  8px;
+    .detail__monthly-amount--money {
+      font-size: 32px;
+      font-weight: bold;
+      color: #0079FF;
+    }
+  }
+
+  .detail__description {
+    padding: 24px 32px;
+    background-color: #F4F8FA;
+    font-size: 14px;
+    line-height: 16px;
+    border: 1px solid #E9EEF2;
+    border-top: none;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius:  8px;
+  }
+
+  .detail__action {
+    margin-top: 32px;
+    text-align: center;
+    button {
+      color: #FFFFFF;
+      padding: 18px 128px;
+      background: #1B31A8;
+      font-weight: bold;
+      border: 2px solid;
+      border-radius: 32px;
+    }
+  }
+
+  .hidden-date-switch {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    z-index: -999999;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .detail__welcome {
+    margin-top: 32px !important;
+  }
+
+  .detail__block {
+    padding: 30px 24px 40px 24px !important;
+  }
+
+  .detail__reach-date {
+    margin-top: 16px !important;
+  }
+
+  .detail__description {
+    text-align: center !important;
+  }
+}

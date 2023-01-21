@@ -1,0 +1,38 @@
+@for $i from 1 through 100 {
+  .mt-#{$i}-px {
+    margin-top: #{($i) + "px"} !important;
+  }
+  .fs-#{$i}-px {
+    font-size: #{($i) + "px"} !important;
+  }
+}
+
+.origin-input-group {
+  font-family: 'Rubik', sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+  height: 56px;
+  border: 1px solid #E9EEF2;
+  border-radius: 4px;
+  .ant-input-prefix {
+    color: #CBD5DC;
+    margin-left: 5px;
+  }
+  input {
+    font-family: 'Rubik', sans-serif;
+    font-weight: bold;
+    font-size: 24px;
+    color: #4D6475;
+    margin-left: 10px;
+  }
+}
+
+.origin-date-picker {
+  border: 1px solid #E9EEF2;
+  border-radius: 4px;
+  height: 56px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

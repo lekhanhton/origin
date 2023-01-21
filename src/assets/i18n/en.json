@@ -1,0 +1,15 @@
+{
+  "SAVING_PLAN_DETAIL": {
+    "WELCOME": "Let's plan your <b>saving goal.</b>",
+    "BUY_HOUSE": "Buy a house",
+    "SAVING_GOAL": "Saving goal",
+    "TOTAL_AMOUNT": "Total amount",
+    "REACH_DATE": "Reach goal by",
+    "MONTHLY_AMOUNT": "Monthly amount",
+    "DESCRIPTION": "You’re planning <b>{{ monthTotal }} monthly deposits</b> to reach your <b>{{ amount }}</b> goal by <b>{{ reachDate }}.</b>",
+    "CONFIRM": "Confirm",
+    "CONFIRM_DIALOG": {
+      "TITLE": "Amount had been set successfully !"
+    }
+  }
+}

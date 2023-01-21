@@ -1,0 +1,35 @@
+:host {
+  display: flex;
+  text-rendering: optimizeLegibility;
+  font-family: 'Work Sans', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #1E2A32;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.pages-layout {
+  height: 100vh;
+
+  .ant-layout-header {
+    height: 80px;
+    padding: 0;
+    background-color: #FFFFFF;
+    .pages-header {
+      height: 80px !important;
+      display: flex;
+      align-items: center;
+      .pages-header__logo {
+        margin-left: 56px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .pages-header__logo {
+    margin-left: 16px !important;
+  }
+}

@@ -1,0 +1,102 @@
+<div class="saving-plan-detail">
+    <div class="detail__welcome" [innerHTML]="('SAVING_PLAN_DETAIL.WELCOME' | translate)">
+    </div>
+    <div class="detail__block">
+        <div class="d-flex">
+            <div>
+                <svg-icon
+                    src="assets/svg-icon/house.svg"
+                ></svg-icon>
+            </div>
+            <div class="ms-3 d-flex flex-column">
+                <div class="detail__block--name">{{ 'SAVING_PLAN_DETAIL.BUY_HOUSE' | translate }}</div>
+                <div class="detail__block--name-tag">{{ 'SAVING_PLAN_DETAIL.SAVING_GOAL' | translate }}</div>
+            </div>
+        </div>
+
+        <div class="row detail__input">
+            <div class="col-sm-7">
+                <span>{{ 'SAVING_PLAN_DETAIL.TOTAL_AMOUNT' | translate }}</span>
+                <nz-input-group nzPrefix="$" class="mt-4-px origin-input-group">
+                    <input
+                        type="text"
+                        nz-input
+                        moneyNumbersOnly
+                        [isCurrencyInput]="true"
+                        [(inputValue)]="amount"
+                        [(ngModel)]="amount"
+                        (ngModelChange)="onChangeAmount()"
+                    />
+                </nz-input-group>
+            </div>
+            <div class="col-sm-5 detail__reach-date">
+                <span>{{ 'SAVING_PLAN_DETAIL.REACH_DATE' | translate }}</span>
+
+                <div class="detail__reach-date--chosen" id="reach-date-chosen"
+                    [class.focus]="isReachDateChosenFocus"
+                    (click)="isReachDateChosenFocus = true; hiddenDateSwitchElem?.focus();"
+                    (blur)="isReachDateChosenFocus = true; hiddenDateSwitchElem?.blur()"
+                    (focusin)="isReachDateChosenFocus = true; hiddenDateSwitchElem?.focus()"
+                    (focusout)="isReachDateChosenFocus = false; hiddenDateSwitchElem?.blur();"
+                >
+                    <div class="d-flex align-items-center cursor-pointer"
+                        [class.change-month-disabled]="isChangeMonthDisabled"
+                        (click)="onChangeMonth(-1)"
+                    >
+                        <span nz-icon nzType="left" nzTheme="outline"></span>
+                    </div>
+                    <div class="text-center cursor-pointer" (click)="onChooseReachDate()">
+                        <div class="fw-bold">{{ reachDate | date: 'MMMM' }}</div>
+                        <div>{{ reachDate | date: 'y' }}</div>
+                    </div>
+                    <div class="d-flex align-items-center cursor-pointer"
+                        (click)="onChangeMonth(1)"
+                    >
+                        <span nz-icon nzType="right" nzTheme="outline"></span>
+                    </div>
+
+                    <nz-date-picker
+                      #datePicker
+                      nzMode="month"
+                      class="w-100 origin-date-picker"
+                      [nzAllowClear]="false"
+                      [nzSuffixIcon]="''"
+                      [nzFormat]="''"
+                      [nzInputReadOnly]="true"
+                      [nzDisabledDate]="disabledDate"
+                      [(ngModel)]="reachDate"
+                      (ngModelChange)="onChangeReachDate()"
+                    ></nz-date-picker>
+                </div>
+            </div>
+        </div>
+
+        <div class="detail__monthly-amount">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="fs-20-px">
+                    {{ 'SAVING_PLAN_DETAIL.MONTHLY_AMOUNT' | translate }}
+                </div>
+                <div class="detail__monthly-amount--money">
+                    {{ monthlyAmount | currency: '' : 'symbol' : currencyDigitsInfo : 'en' }}
+                </div>
+            </div>
+        </div>
+        <div class="detail__description"
+            [innerHTML]="'SAVING_PLAN_DETAIL.DESCRIPTION' | translate: {
+                monthTotal, amount: amount | currency: '' : 'symbol' : currencyDigitsInfo : 'en', reachDate: reachDate | date: 'MMMM y'
+            }"
+        >
+        </div>
+
+        <div class="detail__action">
+            <button (click)="onConfirm()">
+                {{ 'SAVING_PLAN_DETAIL.CONFIRM' | translate }}
+            </button>
+        </div>
+    </div>
+
+    <nz-switch class="hidden-date-switch" #hiddenDateSwitchElem
+               [(ngModel)]="hiddenDateSwitch"
+               (keydown)="onChangeHiddenDateSwitch($event)"
+    ></nz-switch>
+</div>
