@@ -5,15 +5,17 @@ import { TranslateService } from '@ngx-translate/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
 
-import { CURRENCY_PIPE_DIGITS_INFO } from '../../_common/directives/money-numbers-only.directive';
+import {
+  CURRENCY_PIPE_DIGITS_INFO,
+  DECIMAL_INPUT_NUMBER,
+} from '../../_common/directives/money-number-only.directive';
 
 @Component({
   selector: 'app-saving-plan-detail',
   templateUrl: './saving-plan-detail.component.html',
-  styleUrls: ['./saving-plan-detail.component.scss']
+  styleUrls: ['./saving-plan-detail.component.scss'],
 })
 export class SavingPlanDetailComponent implements OnInit {
-
   @ViewChild('datePicker') datePicker!: NzDatePickerComponent;
 
   currentDate: Date = new Date();
@@ -22,37 +24,35 @@ export class SavingPlanDetailComponent implements OnInit {
   monthTotal: number = 1;
   monthlyAmount: number = 0;
   currencyDigitsInfo = CURRENCY_PIPE_DIGITS_INFO;
-  isChangeMonthDisabled: boolean = false;
+  isChangeMonthDisabled: boolean = true;
   isReachDateChosenFocus: boolean = false;
   hiddenDateSwitch: boolean = false;
 
   constructor(
     private modal: NzModalService,
-    private translateService: TranslateService,
-  ) { }
+    private translateService: TranslateService
+  ) {}
 
-  ngOnInit(): void {
-    this.isChangeMonthDisabled = this.reachDate.getTime() <= this.currentDate.getTime();
-  }
+  ngOnInit(): void {}
 
-  onChangeAmount() {
-    this.monthlyAmount = Math.floor(this.amount / this.monthTotal)
-  }
-
-  onChooseReachDate() {
-    this.datePicker.open();
+  onChangeAmount(amount: number) {
+    this.amount = amount;
+    this.monthlyAmount = Number(
+      (this.amount / this.monthTotal).toFixed(DECIMAL_INPUT_NUMBER)
+    );
   }
 
   onChangeMonth(step: number = 0) {
     const newReachDate = new Date(this.reachDate);
-    newReachDate.setMonth(newReachDate.getMonth() + step)
-    this.isChangeMonthDisabled = newReachDate.getTime() <= this.currentDate.getTime();
+    newReachDate.setMonth(newReachDate.getMonth() + step);
+    this.isChangeMonthDisabled =
+      newReachDate.getTime() < this.currentDate.getTime();
     if (this.isChangeMonthDisabled) {
-      return
+      return;
     }
 
     this.reachDate = newReachDate;
-    this.onChangeReachDate()
+    this.onChangeReachDate();
   }
 
   onChangeReachDate() {
@@ -61,9 +61,13 @@ export class SavingPlanDetailComponent implements OnInit {
     const currentMonth = currentDate.getMonth();
     const reachYear = this.reachDate.getFullYear();
     const reachMonth = this.reachDate.getMonth();
-    this.monthTotal = (reachMonth - currentMonth) + (reachYear - currentYear) * 12;
-    this.monthlyAmount = Number((this.amount / this.monthTotal).toFixed(2));
-    this.isChangeMonthDisabled = this.reachDate.getTime() <= this.currentDate.getTime();
+    this.monthTotal =
+      reachMonth - currentMonth + 1 + (reachYear - currentYear) * 12;
+    this.monthlyAmount = Number(
+      (this.amount / this.monthTotal).toFixed(DECIMAL_INPUT_NUMBER)
+    );
+    this.isChangeMonthDisabled =
+      this.reachDate.getTime() < this.currentDate.getTime();
   }
 
   onChangeHiddenDateSwitch(event: any) {
@@ -81,7 +85,9 @@ export class SavingPlanDetailComponent implements OnInit {
 
   onConfirm(): void {
     this.modal.success({
-      nzTitle: this.translateService.instant('SAVING_PLAN_DETAIL.CONFIRM_DIALOG.TITLE'),
+      nzTitle: this.translateService.instant(
+        'SAVING_PLAN_DETAIL.CONFIRM_DIALOG.TITLE'
+      ),
       nzClosable: false,
     });
   }
@@ -96,9 +102,8 @@ export class SavingPlanDetailComponent implements OnInit {
     if (reachDateChosen) {
       this.isReachDateChosenFocus = reachDateChosen.contains(target);
       if (!this.isReachDateChosenFocus) {
-        this.datePicker.close();
+        this.datePicker.checkAndClose();
       }
     }
   }
-
 }
