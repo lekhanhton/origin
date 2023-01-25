@@ -10,11 +10,16 @@ export const ROUTES: Routes = [
     component: PagesComponent,
     children: [
       {
-        path: '', pathMatch: 'full', redirectTo: '/saving-plan-detail',
+        path: '',
+        pathMatch: 'full',
+        redirectTo: '/saving-plan-detail',
       },
       {
         path: 'saving-plan-detail',
-        loadChildren: () => import('./saving-plan-detail/saving-plan-detail.module').then((m) => m.SavingPlanDetailModule),
+        loadChildren: () =>
+          import('./saving-plan-detail/saving-plan-detail.module').then(
+            (m) => m.SavingPlanDetailModule,
+          ),
       },
     ],
   },

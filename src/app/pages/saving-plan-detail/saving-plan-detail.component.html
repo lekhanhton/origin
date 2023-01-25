@@ -10,17 +10,17 @@
       </div>
       <div class="ms-3 d-flex flex-column">
         <div class="detail__block--name">
-          {{ "SAVING_PLAN_DETAIL.BUY_HOUSE" | translate }}
+          {{ 'SAVING_PLAN_DETAIL.BUY_HOUSE' | translate }}
         </div>
         <div class="detail__block--name-tag">
-          {{ "SAVING_PLAN_DETAIL.SAVING_GOAL" | translate }}
+          {{ 'SAVING_PLAN_DETAIL.SAVING_GOAL' | translate }}
         </div>
       </div>
     </div>
 
     <div class="row detail__input">
       <div class="col-sm-7">
-        <span>{{ "SAVING_PLAN_DETAIL.TOTAL_AMOUNT" | translate }}</span>
+        <span>{{ 'SAVING_PLAN_DETAIL.TOTAL_AMOUNT' | translate }}</span>
         <nz-input-group class="mt-4-px origin-input-group" nzPrefix="$">
           <input
             (inputValueChange)="onChangeAmount($event)"
@@ -33,7 +33,7 @@
         </nz-input-group>
       </div>
       <div class="col-sm-5 detail__reach-date">
-        <span>{{ "SAVING_PLAN_DETAIL.REACH_DATE" | translate }}</span>
+        <span>{{ 'SAVING_PLAN_DETAIL.REACH_DATE' | translate }}</span>
 
         <div
           (blur)="isReachDateChosenFocus = true; hiddenDateSwitchElem?.blur()"
@@ -56,8 +56,8 @@
             <span nz-icon nzTheme="outline" nzType="left"></span>
           </div>
           <div (click)="datePicker.open()" class="text-center cursor-pointer">
-            <div class="fw-bold">{{ reachDate | date : "MMMM" }}</div>
-            <div>{{ reachDate | date : "y" }}</div>
+            <div class="fw-bold">{{ reachDate | date : 'MMMM' }}</div>
+            <div>{{ reachDate | date : 'y' }}</div>
           </div>
           <div
             (click)="onChangeMonth(1)"
@@ -85,11 +85,11 @@
     <div class="detail__monthly-amount">
       <div class="d-flex align-items-center justify-content-between">
         <div class="fs-20-px">
-          {{ "SAVING_PLAN_DETAIL.MONTHLY_AMOUNT" | translate }}
+          {{ 'SAVING_PLAN_DETAIL.MONTHLY_AMOUNT' | translate }}
         </div>
         <div class="detail__monthly-amount--money">
           {{
-            monthlyAmount | currency : "" : "symbol" : currencyDigitsInfo : "en"
+            monthlyAmount | currency : '' : 'symbol' : currencyDigitsInfo : 'en'
           }}
         </div>
       </div>
@@ -110,7 +110,7 @@
 
     <div class="detail__action">
       <button (click)="onConfirm()">
-        {{ "SAVING_PLAN_DETAIL.CONFIRM" | translate }}
+        {{ 'SAVING_PLAN_DETAIL.CONFIRM' | translate }}
       </button>
     </div>
   </div>

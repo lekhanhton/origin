@@ -30,7 +30,7 @@ export class SavingPlanDetailComponent implements OnInit {
 
   constructor(
     private modal: NzModalService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {}
 
   ngOnInit(): void {}
@@ -38,7 +38,7 @@ export class SavingPlanDetailComponent implements OnInit {
   onChangeAmount(amount: number) {
     this.amount = amount;
     this.monthlyAmount = Number(
-      (this.amount / this.monthTotal).toFixed(DECIMAL_INPUT_NUMBER)
+      (this.amount / this.monthTotal).toFixed(DECIMAL_INPUT_NUMBER),
     );
   }
 
@@ -64,7 +64,7 @@ export class SavingPlanDetailComponent implements OnInit {
     this.monthTotal =
       reachMonth - currentMonth + 1 + (reachYear - currentYear) * 12;
     this.monthlyAmount = Number(
-      (this.amount / this.monthTotal).toFixed(DECIMAL_INPUT_NUMBER)
+      (this.amount / this.monthTotal).toFixed(DECIMAL_INPUT_NUMBER),
     );
     this.isChangeMonthDisabled =
       this.reachDate.getTime() < this.currentDate.getTime();
@@ -86,7 +86,7 @@ export class SavingPlanDetailComponent implements OnInit {
   onConfirm(): void {
     this.modal.success({
       nzTitle: this.translateService.instant(
-        'SAVING_PLAN_DETAIL.CONFIRM_DIALOG.TITLE'
+        'SAVING_PLAN_DETAIL.CONFIRM_DIALOG.TITLE',
       ),
       nzClosable: false,
     });

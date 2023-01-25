@@ -13,14 +13,9 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
-import { MoneyNumbersOnlyDirective } from './directives/money-numbers-only.directive';
+import { MoneyNumberOnlyDirective } from './directives/money-number-only.directive';
 
-const CoreModule = [
-  CommonModule,
-  FormsModule,
-  RouterModule,
-
-];
+const CoreModule = [CommonModule, FormsModule, RouterModule];
 
 const ThirdPartyModule = [
   AngularSvgIconModule,
@@ -35,16 +30,12 @@ const ThirdPartyModule = [
   NzSwitchModule,
 ];
 
-const directives = [
-  MoneyNumbersOnlyDirective,
-]
+const directives = [MoneyNumberOnlyDirective];
 
-const providers = [
-  CurrencyPipe,
-]
+const providers = [CurrencyPipe];
 
 @NgModule({
-  declarations: [ ...directives],
+  declarations: [...directives],
   imports: [...CoreModule, ...ThirdPartyModule],
   exports: [...CoreModule, ...ThirdPartyModule, ...directives],
   providers: [...providers],

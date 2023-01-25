@@ -10,16 +10,8 @@ import { SavingPlanDetailComponent } from './saving-plan-detail.component';
 import { SavingPlanDetailRoutingModule } from './saving-plan-detail-routing.module';
 
 @NgModule({
-  declarations: [
-    SavingPlanDetailComponent
-  ],
-  imports: [
-    SavingPlanDetailRoutingModule,
-    AppCommonModule,
-  ],
-  providers: [
-    NzModalService,
-    TranslateService,
-  ]
+  declarations: [SavingPlanDetailComponent],
+  imports: [SavingPlanDetailRoutingModule, AppCommonModule],
+  providers: [NzModalService, TranslateService],
 })
-export class SavingPlanDetailModule { }
+export class SavingPlanDetailModule {}

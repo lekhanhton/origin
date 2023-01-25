@@ -5,7 +5,7 @@ import { en_US, NzI18nService, vi_VN } from 'ng-zorro-antd/i18n';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'origin';

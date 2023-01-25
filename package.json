@@ -23,6 +23,7 @@
     "angular-svg-icon": "^14.0.0",
     "bootstrap": "^5.2.3",
     "ng-zorro-antd": "^14.0.0",
+    "prettier": "^2.8.3",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

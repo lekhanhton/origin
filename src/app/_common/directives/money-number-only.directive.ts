@@ -55,7 +55,7 @@ export class MoneyNumberOnlyDirective implements AfterContentChecked {
       this.inputValue || 0,
       this.currencyUnit,
       CURRENCY_PIPE_DISPLAY,
-      CURRENCY_PIPE_DIGITS_INFO
+      CURRENCY_PIPE_DIGITS_INFO,
     );
     return currencyEventValue || '';
   }
@@ -67,7 +67,7 @@ export class MoneyNumberOnlyDirective implements AfterContentChecked {
       if (inputByDotArr[1]?.length > DECIMAL_INPUT_NUMBER) {
         this.inputValue = this.inputValue.slice(
           0,
-          DECIMAL_INPUT_NUMBER - inputByDotArr[1].length
+          DECIMAL_INPUT_NUMBER - inputByDotArr[1].length,
         );
       }
     }

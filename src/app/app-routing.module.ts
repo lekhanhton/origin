@@ -6,12 +6,14 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('src/app/pages/pages-routing.module').then((m) => m.PagesRoutingModule),
+      import('src/app/pages/pages-routing.module').then(
+        (m) => m.PagesRoutingModule,
+      ),
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
