@@ -25,7 +25,8 @@
           <input
             (inputValueChange)="onChangeAmount($event)"
             [(inputValue)]="amount"
-            [isCurrencyInput]="true"
+            class="amount"
+            id="amount"
             moneyNumberOnly
             nz-input
             type="text"
@@ -55,7 +56,11 @@
           >
             <span nz-icon nzTheme="outline" nzType="left"></span>
           </div>
-          <div (click)="datePicker.open()" class="text-center cursor-pointer">
+          <div
+            (click)="datePicker.open()"
+            class="text-center cursor-pointer"
+            id="reach-date-view"
+          >
             <div class="fw-bold">{{ reachDate | date : 'MMMM' }}</div>
             <div>{{ reachDate | date : 'y' }}</div>
           </div>

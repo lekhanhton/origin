@@ -33,7 +33,10 @@ export class SavingPlanDetailComponent implements OnInit {
     private translateService: TranslateService,
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.currentDate.setHours(0, 0, 0, 0);
+    this.reachDate.setHours(0, 0, 0, 0);
+  }
 
   onChangeAmount(amount: number) {
     this.amount = amount;
@@ -57,8 +60,10 @@ export class SavingPlanDetailComponent implements OnInit {
 
   onChangeReachDate() {
     const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth();
+    this.reachDate.setHours(0, 0, 0, 0);
     const reachYear = this.reachDate.getFullYear();
     const reachMonth = this.reachDate.getMonth();
     this.monthTotal =
@@ -67,16 +72,16 @@ export class SavingPlanDetailComponent implements OnInit {
       (this.amount / this.monthTotal).toFixed(DECIMAL_INPUT_NUMBER),
     );
     this.isChangeMonthDisabled =
-      this.reachDate.getTime() < this.currentDate.getTime();
+      this.reachDate.getTime() <= this.currentDate.getTime();
   }
 
-  onChangeHiddenDateSwitch(event: any) {
+  onChangeHiddenDateSwitch(event: KeyboardEvent) {
     if (this.isReachDateChosenFocus) {
-      switch (event.keyCode) {
-        case 37:
+      switch (event.code) {
+        case 'ArrowLeft':
           this.onChangeMonth(-1);
           break;
-        case 39:
+        case 'ArrowRight':
           this.onChangeMonth(1);
           break;
       }

@@ -9,8 +9,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { NZ_I18N, vi_VN } from 'ng-zorro-antd/i18n';
-import { en_US } from 'ng-zorro-antd/i18n';
+import { en_US, NZ_I18N } from 'ng-zorro-antd/i18n';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,7 +28,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AppRoutingModule,
     HttpClientModule,
     AngularSvgIconModule.forRoot(),
-    TranslateModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -46,7 +44,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
           case 'en':
             return en_US;
           default:
-            return vi_VN;
+            return en_US;
         }
       },
     },
