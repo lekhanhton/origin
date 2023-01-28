@@ -1,4 +1,7 @@
 import {
+  AfterViewChecked,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   HostListener,
@@ -15,22 +18,24 @@ import {
   CURRENCY_PIPE_DIGITS_INFO,
   DECIMAL_INPUT_NUMBER,
 } from '../../_common/directives/money-number-only.directive';
+import { LOCALSTORAGE_KEY } from '../../_common/constants/local-storage.constant';
+import { ICountryCurrency } from '../../_common/models/country-currency.interface';
+import { ISavingPlan } from '../../_common/models/saving-plan.interface';
 
 @Component({
   selector: 'app-saving-plan-detail',
   templateUrl: './saving-plan-detail.component.html',
   styleUrls: ['./saving-plan-detail.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SavingPlanDetailComponent implements OnInit {
+export class SavingPlanDetailComponent implements OnInit, AfterViewChecked {
   @ViewChild('datePicker') datePicker!: NzDatePickerComponent;
   @ViewChild('hiddenDateSwitchElem') hiddenDateSwitchElem!: any;
   @ViewChild('monthlyAmountValueElem') monthlyAmountValueElem!: ElementRef;
   @ViewChild('detailMonthlyAmountElem') detailMonthlyAmountElem!: ElementRef;
 
   currentDate: Date = new Date();
-  reachDate: Date = new Date();
   amount: number = 0;
-  monthTotal: number = 1;
   monthlyAmount: number = 0;
   amountDigit = '.0-0';
   monthlyAmountDigit = '.0-0';
@@ -38,35 +43,53 @@ export class SavingPlanDetailComponent implements OnInit {
   isReachDateChosenFocus: boolean = false;
   hiddenDateSwitch: boolean = false;
   isBreakLine: boolean = false;
+  countryCurrency: ICountryCurrency = JSON.parse(
+    localStorage.getItem(LOCALSTORAGE_KEY.COUNTRY_CURRENCY)!,
+  );
+  savingPlan: ISavingPlan = {
+    amount: 0,
+    reachDate: new Date(),
+    monthTotal: 1,
+    countryCode: this.countryCurrency.countryCode,
+    currencyCode: this.countryCurrency.currencyCode,
+    currencySymbol: this.countryCurrency.currencySymbol,
+  };
 
   constructor(
     private modal: NzModalService,
     private translateService: TranslateService,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
     this.currentDate.setHours(0, 0, 0, 0);
-    this.reachDate.setHours(0, 0, 0, 0);
+    this.savingPlan.reachDate.setHours(0, 0, 0, 0);
   }
 
-  onChangeAmount(amount: number) {
-    this.amount = amount;
-    this.amountDigit =
-      this.amount % 1 !== 0 ? CURRENCY_PIPE_DIGITS_INFO : '.0-0';
-    this.monthlyAmount = Number(
-      (this.amount / this.monthTotal).toFixed(DECIMAL_INPUT_NUMBER),
-    );
-    this.monthlyAmountDigit =
-      this.monthlyAmount % 1 !== 0 ? CURRENCY_PIPE_DIGITS_INFO : '.0-0';
+  ngAfterViewChecked() {
     const monthlyAmountValueWidth =
       this.monthlyAmountValueElem.nativeElement.offsetWidth;
     const detailMonthlyAmountWidth =
       this.detailMonthlyAmountElem.nativeElement.offsetWidth;
     this.isBreakLine = monthlyAmountValueWidth > detailMonthlyAmountWidth - 200;
+    this.cdr.detectChanges();
+  }
+
+  onChangeAmount(amount: number) {
+    this.savingPlan.amount = amount;
+    this.amountDigit =
+      this.savingPlan.amount % 1 !== 0 ? CURRENCY_PIPE_DIGITS_INFO : '.0-0';
+    this.monthlyAmount = Number(
+      (this.savingPlan.amount / this.savingPlan.monthTotal).toFixed(
+        DECIMAL_INPUT_NUMBER,
+      ),
+    );
+    this.monthlyAmountDigit =
+      this.monthlyAmount % 1 !== 0 ? CURRENCY_PIPE_DIGITS_INFO : '.0-0';
   }
 
   onChangeMonth(step: number = 0) {
-    const newReachDate = new Date(this.reachDate);
+    const newReachDate = new Date(this.savingPlan.reachDate);
     newReachDate.setMonth(newReachDate.getMonth() + step);
     this.isChangeMonthDisabled =
       newReachDate.getTime() < this.currentDate.getTime();
@@ -74,7 +97,7 @@ export class SavingPlanDetailComponent implements OnInit {
       return;
     }
 
-    this.reachDate = newReachDate;
+    this.savingPlan.reachDate = newReachDate;
     this.onChangeReachDate();
   }
 
@@ -84,16 +107,16 @@ export class SavingPlanDetailComponent implements OnInit {
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth();
 
-    this.reachDate.setHours(0, 0, 0, 0);
-    const reachYear = this.reachDate.getFullYear();
-    const reachMonth = this.reachDate.getMonth();
+    this.savingPlan.reachDate.setHours(0, 0, 0, 0);
+    const reachYear = this.savingPlan.reachDate.getFullYear();
+    const reachMonth = this.savingPlan.reachDate.getMonth();
 
-    this.monthTotal =
+    this.savingPlan.monthTotal =
       reachMonth - currentMonth + 1 + (reachYear - currentYear) * 12;
-    this.onChangeAmount(this.amount);
+    this.onChangeAmount(this.savingPlan.amount);
 
     this.isChangeMonthDisabled =
-      this.reachDate.getTime() <= this.currentDate.getTime();
+      this.savingPlan.reachDate.getTime() <= this.currentDate.getTime();
   }
 
   onChangeHiddenDateSwitch(event: KeyboardEvent) {

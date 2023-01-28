@@ -21,10 +21,13 @@
     <div class="row detail__input">
       <div class="col-sm-7">
         <span>{{ 'SAVING_PLAN_DETAIL.TOTAL_AMOUNT' | translate }}</span>
-        <nz-input-group class="mt-4-px origin-input-group" nzPrefix="$">
+        <nz-input-group
+          class="mt-4-px origin-input-group"
+          nzPrefix="{{ savingPlan.currencySymbol }}"
+        >
           <input
             (inputValueChange)="onChangeAmount($event)"
-            [(inputValue)]="amount"
+            [(inputValue)]="savingPlan.amount"
             class="amount"
             id="amount"
             inputmode="numeric"
@@ -47,27 +50,39 @@
             [class.change-month-disabled]="isChangeMonthDisabled"
             class="d-flex align-items-center cursor-pointer"
           >
-            <span nz-icon nzTheme="outline" nzType="left"></span>
+            <span
+              class="reach-date__arrow-icon"
+              nz-icon
+              nzTheme="outline"
+              nzType="left"
+            ></span>
           </div>
           <div
             (click)="datePicker.open()"
             class="text-center cursor-pointer"
             id="reach-date-view"
           >
-            <div class="fw-bold">{{ reachDate | date : 'MMMM' }}</div>
-            <div>{{ reachDate | date : 'y' }}</div>
+            <div class="fw-bold">
+              {{ savingPlan.reachDate | date : 'MMMM' }}
+            </div>
+            <div>{{ savingPlan.reachDate | date : 'y' }}</div>
           </div>
           <div
             (click)="onChangeMonth(1)"
             class="d-flex align-items-center cursor-pointer"
           >
-            <span nz-icon nzTheme="outline" nzType="right"></span>
+            <span
+              class="reach-date__arrow-icon"
+              nz-icon
+              nzTheme="outline"
+              nzType="right"
+            ></span>
           </div>
 
           <nz-date-picker
             #datePicker
             (ngModelChange)="onChangeReachDate()"
-            [(ngModel)]="reachDate"
+            [(ngModel)]="savingPlan.reachDate"
             [nzAllowClear]="false"
             [nzDisabledDate]="disabledDate"
             [nzFormat]="''"
@@ -89,7 +104,10 @@
         [class.float-end]="!isBreakLine"
         class="monthly-amount__value"
       >
-        {{ monthlyAmount | currency : '' : 'symbol' : monthlyAmountDigit }}
+        {{
+          monthlyAmount
+            | currency : savingPlan.currencyCode : 'symbol' : monthlyAmountDigit
+        }}
       </span>
     </div>
     <div
@@ -97,9 +115,11 @@
         'SAVING_PLAN_DETAIL.DESCRIPTION'
           | translate
             : {
-                monthTotal,
-                amount: amount | currency : '' : 'symbol' : amountDigit,
-                reachDate: reachDate | date : 'MMMM y'
+                monthTotal: savingPlan.monthTotal,
+                amount:
+                  savingPlan.amount
+                  | currency : savingPlan.currencyCode : 'symbol' : amountDigit,
+                reachDate: savingPlan.reachDate | date : 'MMMM y'
               }
       "
       class="detail__description"

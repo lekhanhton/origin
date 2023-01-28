@@ -23,6 +23,7 @@
     "@ngx-translate/http-loader": "^7.0.0",
     "angular-svg-icon": "^14.0.0",
     "bootstrap": "^5.2.3",
+    "countries-and-timezones": "^3.4.0",
     "ng-zorro-antd": "^14.0.0",
     "prettier": "^2.8.3",
     "rxjs": "~7.5.0",

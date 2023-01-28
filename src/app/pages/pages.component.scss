@@ -12,6 +12,7 @@
 
 .pages-layout {
   height: 100vh;
+  overflow-y: hidden;
 
   .ant-layout-header {
     height: 80px;
