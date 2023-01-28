@@ -8,13 +8,7 @@ import { MoneyNumberOnlyDirective } from './money-number-only.directive';
 export class MockElementRef extends ElementRef {}
 
 @Component({
-  template: `
-    <input
-      moneyNumberOnly
-      [(inputValue)]="amount"
-      (inputValueChange)="onChangeAmount($event)"
-    />
-  `,
+  template: ` <input moneyNumberOnly [(inputValue)]="amount" (inputValueChange)="onChangeAmount($event)" /> `,
 })
 export class TestMoneyNumberOnlyDirectiveComponent {
   amount: number = 0;
@@ -31,10 +25,7 @@ describe('MoneyNumberOnlyDirective', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        MoneyNumberOnlyDirective,
-        TestMoneyNumberOnlyDirectiveComponent,
-      ],
+      declarations: [MoneyNumberOnlyDirective, TestMoneyNumberOnlyDirectiveComponent],
       providers: [
         {
           provide: ElementRef,
@@ -47,9 +38,7 @@ describe('MoneyNumberOnlyDirective', () => {
     fixture = TestBed.createComponent(TestMoneyNumberOnlyDirectiveComponent);
     fixture.detectChanges();
 
-    directiveElem = fixture.debugElement.query(
-      By.directive(MoneyNumberOnlyDirective),
-    );
+    directiveElem = fixture.debugElement.query(By.directive(MoneyNumberOnlyDirective));
     directiveInstance = directiveElem.injector.get(MoneyNumberOnlyDirective);
   });
 

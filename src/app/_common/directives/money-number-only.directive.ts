@@ -1,11 +1,4 @@
-import {
-  Directive,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  Input,
-  Output,
-} from '@angular/core';
+import { Directive, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { MONEY_REGEX } from '../constants/regex.constant';
 
@@ -51,10 +44,7 @@ export class MoneyNumberOnlyDirective {
       this.inputValue = value;
       const inputByDotArr = this.inputValue.split('.');
       if (inputByDotArr[1]?.length > DECIMAL_INPUT_NUMBER) {
-        this.inputValue = this.inputValue.slice(
-          0,
-          DECIMAL_INPUT_NUMBER - inputByDotArr[1].length,
-        );
+        this.inputValue = this.inputValue.slice(0, DECIMAL_INPUT_NUMBER - inputByDotArr[1].length);
       }
     }
     this.el.nativeElement.value = this.inputValue;

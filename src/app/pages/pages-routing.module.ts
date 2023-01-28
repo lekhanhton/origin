@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { PagesComponent } from './pages.component';
 import { PagesModule } from './pages.module';
@@ -17,9 +17,7 @@ export const ROUTES: Routes = [
       {
         path: 'saving-plan-detail',
         loadChildren: () =>
-          import('./saving-plan-detail/saving-plan-detail.module').then(
-            (m) => m.SavingPlanDetailModule,
-          ),
+          import('./saving-plan-detail/saving-plan-detail.module').then((m) => m.SavingPlanDetailModule),
       },
     ],
   },

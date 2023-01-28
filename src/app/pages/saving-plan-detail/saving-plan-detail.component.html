@@ -1,8 +1,5 @@
 <div class="saving-plan-detail">
-  <div
-    [innerHTML]="'SAVING_PLAN_DETAIL.WELCOME' | translate"
-    class="detail__welcome"
-  ></div>
+  <div [innerHTML]="'SAVING_PLAN_DETAIL.WELCOME' | translate" class="detail__welcome"></div>
   <div class="detail__block">
     <div class="d-flex">
       <div>
@@ -21,10 +18,7 @@
     <div class="row detail__input">
       <div class="col-sm-7">
         <span>{{ 'SAVING_PLAN_DETAIL.TOTAL_AMOUNT' | translate }}</span>
-        <nz-input-group
-          class="mt-4-px origin-input-group"
-          nzPrefix="{{ savingPlan.currencySymbol }}"
-        >
+        <nz-input-group class="mt-4-px origin-input-group" nzPrefix="{{ savingPlan.currencySymbol }}">
           <input
             (inputValueChange)="onChangeAmount($event)"
             [(inputValue)]="savingPlan.amount"
@@ -40,48 +34,27 @@
       </div>
       <div class="col-sm-5 detail__reach-date">
         <span>{{ 'SAVING_PLAN_DETAIL.REACH_DATE' | translate }}</span>
-        <div
-          [class.focus]="isReachDateChosenFocus"
-          class="detail__reach-date--chosen"
-          id="reach-date-chosen"
-        >
+        <div [class.focus]="isReachDateChosenFocus" class="detail__reach-date--chosen" id="reach-date-chosen">
           <div
             (click)="onChangeMonth(-1)"
             [class.change-month-disabled]="isChangeMonthDisabled"
             class="d-flex align-items-center cursor-pointer"
           >
-            <span
-              class="reach-date__arrow-icon"
-              nz-icon
-              nzTheme="outline"
-              nzType="left"
-            ></span>
+            <span class="reach-date__arrow-icon" nz-icon nzTheme="outline" nzType="left"></span>
           </div>
-          <div
-            (click)="datePicker.open()"
-            class="text-center cursor-pointer"
-            id="reach-date-view"
-          >
+          <div (click)="datePicker.open()" class="text-center cursor-pointer" id="reach-date-view">
             <div class="fw-bold">
               {{ savingPlan.reachDate | date : 'MMMM' }}
             </div>
             <div>{{ savingPlan.reachDate | date : 'y' }}</div>
           </div>
-          <div
-            (click)="onChangeMonth(1)"
-            class="d-flex align-items-center cursor-pointer"
-          >
-            <span
-              class="reach-date__arrow-icon"
-              nz-icon
-              nzTheme="outline"
-              nzType="right"
-            ></span>
+          <div (click)="onChangeMonth(1)" class="d-flex align-items-center cursor-pointer">
+            <span class="reach-date__arrow-icon" nz-icon nzTheme="outline" nzType="right"></span>
           </div>
 
           <nz-date-picker
             #datePicker
-            (ngModelChange)="onChangeReachDate()"
+            (ngModelChange)="onChangeReachDate($event)"
             [(ngModel)]="savingPlan.reachDate"
             [nzAllowClear]="false"
             [nzDisabledDate]="disabledDate"
@@ -99,15 +72,8 @@
       <span class="monthly-amount__title">
         {{ 'SAVING_PLAN_DETAIL.MONTHLY_AMOUNT' | translate }}
       </span>
-      <span
-        #monthlyAmountValueElem
-        [class.float-end]="!isBreakLine"
-        class="monthly-amount__value"
-      >
-        {{
-          monthlyAmount
-            | currency : savingPlan.currencyCode : 'symbol' : monthlyAmountDigit
-        }}
+      <span #monthlyAmountValueElem [class.float-end]="!isBreakLine" class="monthly-amount__value">
+        {{ monthlyAmount | currency : savingPlan.currencyCode : 'symbol' : monthlyAmountDigit }}
       </span>
     </div>
     <div
@@ -116,9 +82,7 @@
           | translate
             : {
                 monthTotal: savingPlan.monthTotal,
-                amount:
-                  savingPlan.amount
-                  | currency : savingPlan.currencyCode : 'symbol' : amountDigit,
+                amount: savingPlan.amount | currency : savingPlan.currencyCode : 'symbol' : amountDigit,
                 reachDate: savingPlan.reachDate | date : 'MMMM y'
               }
       "
@@ -132,10 +96,5 @@
     </div>
   </div>
 
-  <nz-switch
-    #hiddenDateSwitchElem
-    (keydown)="onChangeHiddenDateSwitch($event)"
-    [(ngModel)]="hiddenDateSwitch"
-    class="hidden-date-switch"
-  ></nz-switch>
+  <nz-switch #hiddenDateSwitchElem [(ngModel)]="hiddenDateSwitch" class="hidden-date-switch"></nz-switch>
 </div>

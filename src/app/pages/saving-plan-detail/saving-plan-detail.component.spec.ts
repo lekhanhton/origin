@@ -61,9 +61,7 @@ describe('SavingPlanDetailComponent', () => {
 
     it(`should not update reach date`, () => {
       component.onChangeMonth();
-      expect(component.savingPlan.reachDate.getTime()).toEqual(
-        component.savingPlan.reachDate.getTime(),
-      );
+      expect(component.savingPlan.reachDate.getTime()).toEqual(component.savingPlan.reachDate.getTime());
     });
 
     const newReachDate = new Date(reachDate);
@@ -71,9 +69,7 @@ describe('SavingPlanDetailComponent', () => {
     it(`should update reach date = ${newReachDate} with current reach date = ${reachDate} + 1 month`, () => {
       component.savingPlan.reachDate = new Date(reachDate);
       component.onChangeMonth(1);
-      expect(component.savingPlan.reachDate.getTime()).toEqual(
-        newReachDate.getTime(),
-      );
+      expect(component.savingPlan.reachDate.getTime()).toEqual(newReachDate.getTime());
     });
 
     const preReachDate = new Date(newReachDate);
@@ -81,9 +77,7 @@ describe('SavingPlanDetailComponent', () => {
     it(`should update reach date = ${preReachDate} with current reach date = ${newReachDate} - 1 month`, () => {
       component.savingPlan.reachDate = new Date(preReachDate);
       component.onChangeMonth(-1);
-      expect(component.savingPlan.reachDate.getTime()).toEqual(
-        preReachDate.getTime(),
-      );
+      expect(component.savingPlan.reachDate.getTime()).toEqual(preReachDate.getTime());
     });
 
     it(`should call onChangeReachDate with current reach date + 1 month`, () => {

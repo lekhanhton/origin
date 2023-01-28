@@ -13,22 +13,13 @@ import { COUNTRY_CURRENCY_DATA } from './_common/constants/country-currency-data
 export class AppComponent {
   language: string = 'en';
   timezoneName: string = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  countries: countryTimezone.Country[] =
-    countryTimezone.getCountriesForTimezone(this.timezoneName);
+  countries: countryTimezone.Country[] = countryTimezone.getCountriesForTimezone(this.timezoneName);
 
-  constructor(
-    private translate: TranslateService,
-    private i18n: NzI18nService,
-  ) {
+  constructor(private translate: TranslateService, private i18n: NzI18nService) {
     this.translate.setDefaultLang(this.language);
     this.translate.use(this.language);
     this.i18n.setLocale(en_US);
-    const countryCurrency = COUNTRY_CURRENCY_DATA.find(
-      (e) => e.countryCode === this.countries[0].id,
-    );
-    localStorage.setItem(
-      LOCALSTORAGE_KEY.COUNTRY_CURRENCY,
-      JSON.stringify(countryCurrency),
-    );
+    const countryCurrency = COUNTRY_CURRENCY_DATA.find((e) => e.countryCode === this.countries[0].id);
+    localStorage.setItem(LOCALSTORAGE_KEY.COUNTRY_CURRENCY, JSON.stringify(countryCurrency));
   }
 }
