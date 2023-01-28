@@ -75,7 +75,7 @@ describe('MoneyNumberOnlyDirective', () => {
 
   it('should update element value by focusout', () => {
     directiveInstance.onInputFocusout();
-    expect(directiveInstance['el'].nativeElement.value).toEqual('0.00');
+    expect(directiveInstance['el'].nativeElement.value).toEqual('0');
   });
 
   it('should update element value by focusin with a value', () => {
@@ -92,7 +92,7 @@ describe('MoneyNumberOnlyDirective', () => {
 
   it('should return a custom value with value = 1000', () => {
     directiveInstance.inputValue = 1000;
-    expect(directiveInstance['transformEventValue']()).toEqual('1,000.00');
+    expect(directiveInstance['transformEventValue']()).toEqual('1,000');
   });
 
   it('should return a custom value with value = 10000.51', () => {
@@ -102,7 +102,7 @@ describe('MoneyNumberOnlyDirective', () => {
 
   it('should return a custom value with value = 0', () => {
     directiveInstance.inputValue = 0;
-    expect(directiveInstance['transformEventValue']()).toEqual('0.00');
+    expect(directiveInstance['transformEventValue']()).toEqual('0');
   });
 
   it('should call emit change value = 1000', () => {

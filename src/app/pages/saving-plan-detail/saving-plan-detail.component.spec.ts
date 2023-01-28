@@ -136,10 +136,40 @@ describe('SavingPlanDetailComponent', () => {
   });
 
   describe('onClick', () => {
-    it('should call checkAndClose of NzDatePickerComponent', () => {
-      component.datePicker['checkAndClose'] = () => {};
-      const spy = spyOn(component.datePicker, 'checkAndClose');
+    it('should set isReachDateChosenFocus = false', () => {
+      const reachDateChosen = document.getElementById('reach-date-chosen')!;
+      reachDateChosen.contains = () => false;
       component.onClick(null);
+      expect(component.isReachDateChosenFocus).toEqual(false);
+    });
+
+    it('should set isReachDateChosenFocus = true', () => {
+      component.hiddenDateSwitchElem.focus = () => {};
+      const reachDateChosen = document.getElementById('reach-date-chosen')!;
+      reachDateChosen.contains = () => true;
+      component.onClick(null);
+      expect(component.isReachDateChosenFocus).toEqual(true);
+    });
+  });
+
+  describe('onKeydown', () => {
+    it('should call focus method of hiddenDateSwitchElem', () => {
+      component.hiddenDateSwitchElem.focus = () => {};
+      const spy = spyOn(component.hiddenDateSwitchElem, 'focus');
+      const amountElem = document.getElementById('amount');
+      const mockEvent = {
+        code: 'Tab',
+        target: amountElem,
+        preventDefault: () => {},
+      } as KeyboardEvent;
+      component.onKeydown(mockEvent);
+      expect(spy).toHaveBeenCalled();
+    });
+
+    it('should call onChangeHiddenDateSwitch of component', () => {
+      const spy = spyOn(component, 'onChangeHiddenDateSwitch');
+      const mockEvent = {} as KeyboardEvent;
+      component.onKeydown(mockEvent);
       expect(spy).toHaveBeenCalled();
     });
   });

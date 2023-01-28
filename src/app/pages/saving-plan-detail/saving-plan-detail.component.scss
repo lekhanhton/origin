@@ -15,11 +15,15 @@
     background: #ffffff;
     box-shadow: 0 16px 32px rgba(30, 42, 50, 0.08);
     border-radius: 8px;
+    height: calc(100vh - 250px);
+    overflow-y: auto;
+
     .detail__block--name {
       font-family: 'Rubik', sans-serif;
       font-weight: 600;
       font-size: 24px;
     }
+
     .detail__block--name-tag {
       color: #708797;
       font-size: 16px;
@@ -40,12 +44,14 @@
     border: 1px solid #e9eef2;
     border-radius: 4px;
     position: relative;
+
     .origin-date-picker {
       position: absolute;
       left: 0;
       z-index: -10;
       opacity: 0;
     }
+
     .change-month-disabled {
       cursor: default;
       opacity: 0;
@@ -63,20 +69,22 @@
 
   .detail__monthly-amount {
     margin-top: 24px;
-    padding: 24px 32px;
+    padding: 24px;
     border: 1px solid #e9eef2;
     border-bottom: none;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-    .detail__monthly-amount--money {
+
+    .monthly-amount__value {
       font-size: 32px;
       font-weight: bold;
       color: #0079ff;
+      margin-top: -12px;
     }
   }
 
   .detail__description {
-    padding: 24px 32px;
+    padding: 24px;
     background-color: #f4f8fa;
     font-size: 14px;
     line-height: 16px;
@@ -89,6 +97,7 @@
   .detail__action {
     margin-top: 32px;
     text-align: center;
+
     button {
       color: #ffffff;
       padding: 18px 128px;
@@ -110,18 +119,49 @@
 
 @media screen and (max-width: 576px) {
   .detail__welcome {
-    margin-top: 32px !important;
+    margin-top: 24px !important;
+    font-size: 18px !important;
   }
 
   .detail__block {
-    padding: 30px 24px 40px 24px !important;
+    padding: 32px 24px 40px 24px !important;
+    height: calc(100vh - 200px) !important;
+  }
+
+  .detail__input {
+    margin-top: 24px !important;
+
+    .amount {
+      font-size: 20px;
+    }
   }
 
   .detail__reach-date {
     margin-top: 16px !important;
   }
 
+  .detail__monthly-amount {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+
+    .monthly-amount__title {
+      font-size: 18px !important;
+    }
+
+    .monthly-amount__value {
+      font-size: 24px !important;
+      margin-top: -5px !important;
+    }
+  }
+
   .detail__description {
     text-align: center !important;
+  }
+
+  .detail__action {
+    button {
+      padding: 18px !important;
+      width: 100%;
+    }
   }
 }

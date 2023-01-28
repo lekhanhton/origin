@@ -17,10 +17,13 @@
     height: 80px;
     padding: 0;
     background-color: #ffffff;
+    width: 100%;
+
     .pages-header {
-      height: 80px !important;
+      height: 100% !important;
       display: flex;
       align-items: center;
+
       .pages-header__logo {
         margin-left: 56px;
       }
@@ -31,5 +34,9 @@
 @media screen and (max-width: 576px) {
   .pages-header__logo {
     margin-left: 16px !important;
+  }
+
+  .ant-layout-header {
+    height: 56px !important;
   }
 }

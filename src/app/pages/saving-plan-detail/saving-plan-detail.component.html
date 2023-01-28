@@ -27,6 +27,8 @@
             [(inputValue)]="amount"
             class="amount"
             id="amount"
+            inputmode="numeric"
+            maxlength="15"
             moneyNumberOnly
             nz-input
             type="text"
@@ -35,16 +37,7 @@
       </div>
       <div class="col-sm-5 detail__reach-date">
         <span>{{ 'SAVING_PLAN_DETAIL.REACH_DATE' | translate }}</span>
-
         <div
-          (blur)="isReachDateChosenFocus = true; hiddenDateSwitchElem?.blur()"
-          (click)="isReachDateChosenFocus = true; hiddenDateSwitchElem?.focus()"
-          (focusin)="
-            isReachDateChosenFocus = true; hiddenDateSwitchElem?.focus()
-          "
-          (focusout)="
-            isReachDateChosenFocus = false; hiddenDateSwitchElem?.blur()
-          "
           [class.focus]="isReachDateChosenFocus"
           class="detail__reach-date--chosen"
           id="reach-date-chosen"
@@ -87,17 +80,17 @@
       </div>
     </div>
 
-    <div class="detail__monthly-amount">
-      <div class="d-flex align-items-center justify-content-between">
-        <div class="fs-20-px">
-          {{ 'SAVING_PLAN_DETAIL.MONTHLY_AMOUNT' | translate }}
-        </div>
-        <div class="detail__monthly-amount--money">
-          {{
-            monthlyAmount | currency : '' : 'symbol' : currencyDigitsInfo : 'en'
-          }}
-        </div>
-      </div>
+    <div #detailMonthlyAmountElem class="detail__monthly-amount">
+      <span class="monthly-amount__title">
+        {{ 'SAVING_PLAN_DETAIL.MONTHLY_AMOUNT' | translate }}
+      </span>
+      <span
+        #monthlyAmountValueElem
+        [class.float-end]="!isBreakLine"
+        class="monthly-amount__value"
+      >
+        {{ monthlyAmount | currency : '' : 'symbol' : monthlyAmountDigit }}
+      </span>
     </div>
     <div
       [innerHTML]="
@@ -105,8 +98,7 @@
           | translate
             : {
                 monthTotal,
-                amount:
-                  amount | currency : '' : 'symbol' : currencyDigitsInfo : 'en',
+                amount: amount | currency : '' : 'symbol' : amountDigit,
                 reachDate: reachDate | date : 'MMMM y'
               }
       "

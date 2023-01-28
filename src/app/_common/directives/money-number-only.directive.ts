@@ -42,7 +42,7 @@ export class MoneyNumberOnlyDirective {
       this.inputValue || 0,
       this.currencyUnit,
       CURRENCY_PIPE_DISPLAY,
-      CURRENCY_PIPE_DIGITS_INFO,
+      +this.inputValue % 1 !== 0 ? CURRENCY_PIPE_DIGITS_INFO : '.0-0',
     )!;
   }
 

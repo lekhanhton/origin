@@ -1,4 +1,10 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -17,16 +23,21 @@ import {
 })
 export class SavingPlanDetailComponent implements OnInit {
   @ViewChild('datePicker') datePicker!: NzDatePickerComponent;
+  @ViewChild('hiddenDateSwitchElem') hiddenDateSwitchElem!: any;
+  @ViewChild('monthlyAmountValueElem') monthlyAmountValueElem!: ElementRef;
+  @ViewChild('detailMonthlyAmountElem') detailMonthlyAmountElem!: ElementRef;
 
   currentDate: Date = new Date();
   reachDate: Date = new Date();
   amount: number = 0;
   monthTotal: number = 1;
   monthlyAmount: number = 0;
-  currencyDigitsInfo = CURRENCY_PIPE_DIGITS_INFO;
+  amountDigit = '.0-0';
+  monthlyAmountDigit = '.0-0';
   isChangeMonthDisabled: boolean = true;
   isReachDateChosenFocus: boolean = false;
   hiddenDateSwitch: boolean = false;
+  isBreakLine: boolean = false;
 
   constructor(
     private modal: NzModalService,
@@ -40,9 +51,18 @@ export class SavingPlanDetailComponent implements OnInit {
 
   onChangeAmount(amount: number) {
     this.amount = amount;
+    this.amountDigit =
+      this.amount % 1 !== 0 ? CURRENCY_PIPE_DIGITS_INFO : '.0-0';
     this.monthlyAmount = Number(
       (this.amount / this.monthTotal).toFixed(DECIMAL_INPUT_NUMBER),
     );
+    this.monthlyAmountDigit =
+      this.monthlyAmount % 1 !== 0 ? CURRENCY_PIPE_DIGITS_INFO : '.0-0';
+    const monthlyAmountValueWidth =
+      this.monthlyAmountValueElem.nativeElement.offsetWidth;
+    const detailMonthlyAmountWidth =
+      this.detailMonthlyAmountElem.nativeElement.offsetWidth;
+    this.isBreakLine = monthlyAmountValueWidth > detailMonthlyAmountWidth - 200;
   }
 
   onChangeMonth(step: number = 0) {
@@ -63,14 +83,15 @@ export class SavingPlanDetailComponent implements OnInit {
     currentDate.setHours(0, 0, 0, 0);
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth();
+
     this.reachDate.setHours(0, 0, 0, 0);
     const reachYear = this.reachDate.getFullYear();
     const reachMonth = this.reachDate.getMonth();
+
     this.monthTotal =
       reachMonth - currentMonth + 1 + (reachYear - currentYear) * 12;
-    this.monthlyAmount = Number(
-      (this.amount / this.monthTotal).toFixed(DECIMAL_INPUT_NUMBER),
-    );
+    this.onChangeAmount(this.amount);
+
     this.isChangeMonthDisabled =
       this.reachDate.getTime() <= this.currentDate.getTime();
   }
@@ -103,12 +124,23 @@ export class SavingPlanDetailComponent implements OnInit {
 
   @HostListener('click', ['$event.target'])
   onClick(target: any) {
-    const reachDateChosen = document.getElementById('reach-date-chosen');
-    if (reachDateChosen) {
-      this.isReachDateChosenFocus = reachDateChosen.contains(target);
-      if (!this.isReachDateChosenFocus) {
-        this.datePicker.checkAndClose();
-      }
+    const reachDateChosen = document.getElementById('reach-date-chosen')!;
+    const reachDateView = document.getElementById('reach-date-view')!;
+    this.isReachDateChosenFocus = reachDateChosen.contains(target);
+    if (this.isReachDateChosenFocus) {
+      !reachDateView.contains(target) && this.hiddenDateSwitchElem.focus();
     }
+  }
+
+  @HostListener('keydown', ['$event'])
+  onKeydown(event: KeyboardEvent) {
+    const amountElem = document.getElementById('amount');
+    if (event.code === 'Tab' && event.target === amountElem) {
+      event.preventDefault();
+      this.isReachDateChosenFocus = true;
+      this.hiddenDateSwitchElem.focus();
+    }
+
+    this.onChangeHiddenDateSwitch(event);
   }
 }
