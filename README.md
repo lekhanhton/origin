@@ -13,7 +13,7 @@ for your goals. Users can have many saving goals (e.g. go to college or throw a 
   <li>Simple design and easy to use</li>
   <li>Compatible both on desktop and mobile</li>
   <li>Currency dynamic based on timezone</li>
-  <li>Handle big data</li>
+  <li>Handle big number</li>
 </ul>
 
 <br><b>How it works:</b> </br> The app have two input components that is Saving money total and Month of target, I call
