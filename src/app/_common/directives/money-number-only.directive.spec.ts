@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, DebugElement, ElementRef } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { CurrencyPipe } from '@angular/common';
 
 import { MoneyNumberOnlyDirective } from './money-number-only.directive';
+import { BigNumber } from '../data-types/big-number';
 
 export class MockElementRef extends ElementRef {}
 
@@ -11,7 +11,7 @@ export class MockElementRef extends ElementRef {}
   template: ` <input moneyNumberOnly [(inputValue)]="amount" (inputValueChange)="onChangeAmount($event)" /> `,
 })
 export class TestMoneyNumberOnlyDirectiveComponent {
-  amount: number = 0;
+  amount: BigNumber = new BigNumber(0);
 
   onChangeAmount(event: any) {
     console.log(event);
@@ -31,7 +31,6 @@ describe('MoneyNumberOnlyDirective', () => {
           provide: ElementRef,
           useValue: MockElementRef,
         },
-        CurrencyPipe,
       ],
     }).compileComponents();
 
@@ -68,35 +67,26 @@ describe('MoneyNumberOnlyDirective', () => {
   });
 
   it('should update element value by focusin with a value', () => {
-    directiveInstance.inputValue = 1000.55;
+    directiveInstance.inputValue = new BigNumber(1000.55);
     directiveInstance.onInputFocusin();
     expect(directiveInstance['el'].nativeElement.value).toEqual('1000.55');
   });
 
   it('should update element value by focusout with a value', () => {
-    directiveInstance.inputValue = 1000.55;
+    directiveInstance.inputValue = new BigNumber(1000.55);
     directiveInstance.onInputFocusout();
     expect(directiveInstance['el'].nativeElement.value).toEqual('1,000.55');
-  });
-
-  it('should return a custom value with value = 1000', () => {
-    directiveInstance.inputValue = 1000;
-    expect(directiveInstance['transformEventValue']()).toEqual('1,000');
-  });
-
-  it('should return a custom value with value = 10000.51', () => {
-    directiveInstance.inputValue = 10000.51;
-    expect(directiveInstance['transformEventValue']()).toEqual('10,000.51');
-  });
-
-  it('should return a custom value with value = 0', () => {
-    directiveInstance.inputValue = 0;
-    expect(directiveInstance['transformEventValue']()).toEqual('0');
   });
 
   it('should call emit change value = 1000', () => {
     spyOn(directiveInstance.inputValueChange, 'emit');
     directiveInstance['updateValue']('1000');
+    expect(directiveInstance.inputValueChange.emit).toHaveBeenCalled();
+  });
+
+  it('should call emit with a invalid value', () => {
+    spyOn(directiveInstance.inputValueChange, 'emit');
+    directiveInstance['updateValue']('a');
     expect(directiveInstance.inputValueChange.emit).toHaveBeenCalled();
   });
 
@@ -109,6 +99,6 @@ describe('MoneyNumberOnlyDirective', () => {
   it('should update element value with input value = ""', () => {
     spyOn(directiveInstance.inputValueChange, 'emit');
     directiveInstance['updateValue']('');
-    expect(directiveInstance['el'].nativeElement.value).toEqual('');
+    expect(directiveInstance['el'].nativeElement.value).toEqual('0');
   });
 });

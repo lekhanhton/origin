@@ -72,7 +72,7 @@
         {{ 'SAVING_PLAN_DETAIL.MONTHLY_AMOUNT' | translate }}
       </span>
       <span #monthlyAmountValueElem [class.float-end]="!isBreakLine" class="monthly-amount__value">
-        {{ savingPlan.monthlyAmount.toString() | formatMoney }}
+        {{ savingPlan.currencySymbol + (savingPlan.monthlyAmount.toString() | formatMoney) }}
       </span>
     </div>
     <div

@@ -1,5 +1,5 @@
 export class CommonUtil {
-  public static formatMoney(inputValue: string): string {
+  public static formatMoneyText(inputValue: string = ''): string {
     const splitInputValue = inputValue.split('.');
     const integerPart = splitInputValue[0];
     const decimalPart = splitInputValue[1];
@@ -9,19 +9,31 @@ export class CommonUtil {
   }
 
   private static getFormatIntegerPart(inputValue: string = ''): string {
+    if (inputValue.includes('.')) {
+      return '';
+    }
+    if (inputValue.length <= 3) {
+      return inputValue;
+    }
     const threeNumberArr = [];
     let elem = '';
-    for (let idx = 0; idx < inputValue.length; idx++) {
-      elem += inputValue[idx];
-      if (idx % 3 === 0) {
-        threeNumberArr.push(elem);
+    for (let idx = inputValue.length - 1; idx >= 0; idx--) {
+      elem = inputValue[idx] + elem;
+      if (elem.length === 3) {
+        threeNumberArr.unshift(elem);
         elem = '';
       }
+    }
+    if (elem.length) {
+      threeNumberArr.unshift(elem);
     }
     return threeNumberArr.join(',');
   }
 
   private static getFormatDecimalPart(inputValue: string = ''): string {
+    if (inputValue.includes('.')) {
+      return '';
+    }
     if (!inputValue.length) {
       return inputValue;
     }

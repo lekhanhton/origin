@@ -41,6 +41,6 @@ const providers = [CurrencyPipe];
   declarations: [...directives, ...pipes],
   imports: [...CoreModule, ...ThirdPartyModule],
   exports: [...CoreModule, ...ThirdPartyModule, ...directives, ...pipes],
-  providers: [...providers],
+  providers: [...providers, ...pipes],
 })
 export class AppCommonModule {}

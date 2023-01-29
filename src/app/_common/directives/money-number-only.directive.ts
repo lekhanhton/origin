@@ -16,7 +16,7 @@ export class MoneyNumberOnlyDirective {
   @Output() inputValueChange: EventEmitter<BigNumber> = new EventEmitter<BigNumber>();
 
   constructor(private el: ElementRef) {
-    this.el.nativeElement.value = CommonUtil.formatMoney(this.inputValue.toString());
+    this.el.nativeElement.value = CommonUtil.formatMoneyText(this.inputValue.toString());
   }
 
   @HostListener('input', ['$event']) onInputChange(event: any): void {
@@ -29,19 +29,21 @@ export class MoneyNumberOnlyDirective {
   }
 
   @HostListener('focusout', ['$event']) onInputFocusout(): void {
-    this.el.nativeElement.value = CommonUtil.formatMoney(this.inputValue.toString());
+    this.el.nativeElement.value = CommonUtil.formatMoneyText(this.inputValue.toString());
   }
 
   private updateValue(value: string): void {
     if ((!isNaN(+value) && MONEY_REGEX.test(value)) || value === '') {
-      const inputByDotArr = this.inputValue.toString().split('.');
+      const inputByDotArr = value.toString().split('.');
       if (inputByDotArr[1]?.length > DECIMAL_INPUT_NUMBER) {
         this.inputValue = new BigNumber(value.slice(0, DECIMAL_INPUT_NUMBER - inputByDotArr[1].length));
+        this.el.nativeElement.value = this.inputValue.toString();
       } else {
         this.inputValue = new BigNumber(value);
       }
+    } else {
+      this.el.nativeElement.value = this.inputValue.toString();
     }
-    this.el.nativeElement.value = this.inputValue.toString();
     this.inputValueChange.emit(this.inputValue);
   }
 }

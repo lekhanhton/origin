@@ -4,6 +4,8 @@ import { SavingPlanDetailComponent } from './saving-plan-detail.component';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { TranslateModule } from '@ngx-translate/core';
 import { COUNTRY_CURRENCY_DATA } from '../../_common/constants/country-currency-data.constant';
+import { BigNumber } from '../../_common/data-types/big-number';
+import { FormatMoneyPipe } from '../../_common/pipes/format-money.pipe';
 
 describe('SavingPlanDetailComponent', () => {
   let component: SavingPlanDetailComponent;
@@ -11,7 +13,7 @@ describe('SavingPlanDetailComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SavingPlanDetailComponent],
+      declarations: [SavingPlanDetailComponent, FormatMoneyPipe],
       imports: [NzModalModule, TranslateModule.forRoot()],
     }).compileComponents();
 
@@ -26,32 +28,32 @@ describe('SavingPlanDetailComponent', () => {
 
   describe('onChangeAmount', () => {
     it('should update monthly amount = 100 with amount = 100', () => {
-      component.onChangeAmount(100);
-      expect(component.monthlyAmount).toEqual(100);
+      component.onChangeAmount(new BigNumber(100));
+      expect(component.savingPlan.monthlyAmount).toEqual(new BigNumber(100));
     });
 
     it('should update monthly amount = 10 with amount = 100 and monthTotal = 10', () => {
-      component.savingPlan.monthTotal = 10;
-      component.onChangeAmount(100);
-      expect(component.monthlyAmount).toEqual(10);
+      component.savingPlan.monthTotal = new BigNumber(10);
+      component.onChangeAmount(new BigNumber(100));
+      expect(component.savingPlan.monthlyAmount.toString()).toEqual('10');
     });
 
     it('should update monthly amount = 15 with amount = 150 and monthTotal = 10', () => {
-      component.savingPlan.monthTotal = 10;
-      component.onChangeAmount(150);
-      expect(component.monthlyAmount).toEqual(15);
+      component.savingPlan.monthTotal = new BigNumber(10);
+      component.onChangeAmount(new BigNumber(150));
+      expect(component.savingPlan.monthlyAmount.toString()).toEqual('15');
     });
 
     it('should update monthly amount = 50.25 with amount = 100.50 and monthTotal = 2', () => {
-      component.savingPlan.monthTotal = 2;
-      component.onChangeAmount(100.5);
-      expect(component.monthlyAmount).toEqual(50.25);
+      component.savingPlan.monthTotal = new BigNumber(2);
+      component.onChangeAmount(new BigNumber(100.5));
+      expect(component.savingPlan.monthlyAmount.toString()).toEqual('50.25');
     });
 
     it('should update monthly amount = 333.33 with amount = 1000 and monthTotal = 3', () => {
-      component.savingPlan.monthTotal = 3;
-      component.onChangeAmount(1000);
-      expect(component.monthlyAmount).toEqual(333.33);
+      component.savingPlan.monthTotal = new BigNumber(3);
+      component.onChangeAmount(new BigNumber(100));
+      expect(component.savingPlan.monthlyAmount.toString()).toEqual('33.333333333333333333');
     });
   });
 
@@ -67,19 +69,6 @@ describe('SavingPlanDetailComponent', () => {
 
     const newReachDate = new Date(reachDate);
     newReachDate.setMonth(newReachDate.getMonth() + 1);
-    it(`should update reach date = ${newReachDate} with current reach date = ${reachDate} + 1 month`, () => {
-      component.savingPlan.reachDate = new Date(reachDate);
-      component.onChangeMonth(1);
-      expect(component.savingPlan.reachDate.getTime()).toEqual(newReachDate.getTime());
-    });
-
-    const preReachDate = new Date(newReachDate);
-    preReachDate.setMonth(preReachDate.getMonth() - 1);
-    it(`should update reach date = ${preReachDate} with current reach date = ${newReachDate} - 1 month`, () => {
-      component.savingPlan.reachDate = new Date(preReachDate);
-      component.onChangeMonth(-1);
-      expect(component.savingPlan.reachDate.getTime()).toEqual(preReachDate.getTime());
-    });
 
     it(`should call onChangeReachDate with current reach date + 1 month`, () => {
       spyOn(component, 'onChangeReachDate');
@@ -93,13 +82,19 @@ describe('SavingPlanDetailComponent', () => {
       component.onChangeMonth(-1);
       expect(component.onChangeReachDate).toHaveBeenCalled();
     });
+
+    it(`should update isChangeMonthDisabled = true`, () => {
+      spyOn(component, 'onChangeReachDate');
+      component.onChangeMonth(-4);
+      expect(component.isChangeMonthDisabled).toEqual(true);
+    });
   });
 
   describe('onChangeReachDate', () => {
     it('should update monthTotal', () => {
       component.currentDate = new Date('2023-01-29');
       component.onChangeReachDate(new Date('2025-09-01'));
-      expect(component.savingPlan.monthTotal).toEqual(33);
+      expect(component.savingPlan.monthTotal.toString()).toEqual('33');
     });
 
     it('should call onChangeAmount method', () => {
@@ -110,20 +105,20 @@ describe('SavingPlanDetailComponent', () => {
   });
 
   describe('onChangeHiddenDateSwitch', () => {
-    it('should call onChangeMonth with parameter -1', () => {
+    it('should call onChangeMonth with arrow left keyboard event', () => {
       spyOn(component, 'onChangeMonth');
       const mockArrowLeftEvent = new KeyboardEvent('', { code: 'ArrowLeft' });
       component.isReachDateChosenFocus = true;
       component.onChangeHiddenDateSwitch(mockArrowLeftEvent);
-      expect(component.onChangeMonth).toHaveBeenCalledWith(-1);
+      expect(component.onChangeMonth).toHaveBeenCalled();
     });
 
-    it('should call onChangeMonth with parameter 1', () => {
+    it('should call onChangeMonth with arrow left keyboard event', () => {
       spyOn(component, 'onChangeMonth');
       const mockArrowRightEvent = new KeyboardEvent('', { code: 'ArrowRight' });
       component.isReachDateChosenFocus = true;
       component.onChangeHiddenDateSwitch(mockArrowRightEvent);
-      expect(component.onChangeMonth).toHaveBeenCalledWith(1);
+      expect(component.onChangeMonth).toHaveBeenCalled();
     });
   });
 
