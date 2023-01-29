@@ -14,10 +14,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
 
-import { CURRENCY_PIPE_DIGITS_INFO, DECIMAL_INPUT_NUMBER } from '../../_common/directives/money-number-only.directive';
+import { CURRENCY_PIPE_DIGITS_INFO } from '../../_common/directives/money-number-only.directive';
 import { LOCALSTORAGE_KEY } from '../../_common/constants/local-storage.constant';
 import { ICountryCurrency } from '../../_common/models/country-currency.interface';
 import { ISavingPlan } from '../../_common/models/saving-plan.interface';
+import { BigNumber } from '../../_common/data-types/big-number';
 
 @Component({
   selector: 'app-saving-plan-detail',
@@ -32,8 +33,6 @@ export class SavingPlanDetailComponent implements OnInit, AfterViewChecked {
   @ViewChild('detailMonthlyAmountElem') detailMonthlyAmountElem!: ElementRef;
 
   currentDate: Date = new Date();
-  amount: number = 0;
-  monthlyAmount: number = 0;
   amountDigit = '.0-0';
   monthlyAmountDigit = '.0-0';
   isChangeMonthDisabled: boolean = true;
@@ -42,9 +41,10 @@ export class SavingPlanDetailComponent implements OnInit, AfterViewChecked {
   isBreakLine: boolean = false;
   countryCurrency: ICountryCurrency = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY.COUNTRY_CURRENCY)!);
   savingPlan: ISavingPlan = {
-    amount: 0,
+    amount: new BigNumber('0'),
     reachDate: new Date(),
-    monthTotal: 1,
+    monthTotal: new BigNumber('1'),
+    monthlyAmount: new BigNumber('0'),
     countryCode: this.countryCurrency?.countryCode,
     currencyCode: this.countryCurrency?.currencyCode,
     currencySymbol: this.countryCurrency?.currencySymbol,
@@ -70,11 +70,11 @@ export class SavingPlanDetailComponent implements OnInit, AfterViewChecked {
     this.cdr.detectChanges();
   }
 
-  onChangeAmount(amount: number) {
+  onChangeAmount(amount: BigNumber) {
     this.savingPlan.amount = amount;
-    this.amountDigit = this.savingPlan.amount % 1 !== 0 ? CURRENCY_PIPE_DIGITS_INFO : '.0-0';
-    this.monthlyAmount = Number((this.savingPlan.amount / this.savingPlan.monthTotal).toFixed(DECIMAL_INPUT_NUMBER));
-    this.monthlyAmountDigit = this.monthlyAmount % 1 !== 0 ? CURRENCY_PIPE_DIGITS_INFO : '.0-0';
+    this.amountDigit = this.savingPlan.amount.isDecimalNumber ? CURRENCY_PIPE_DIGITS_INFO : '.0-0';
+    this.savingPlan.monthlyAmount = new BigNumber(this.savingPlan.amount.divide(this.savingPlan.monthTotal));
+    this.monthlyAmountDigit = this.savingPlan.monthlyAmount.isDecimalNumber ? CURRENCY_PIPE_DIGITS_INFO : '.0-0';
   }
 
   onChangeMonth(step: number = 0) {
@@ -101,7 +101,7 @@ export class SavingPlanDetailComponent implements OnInit, AfterViewChecked {
     const reachYear = this.savingPlan.reachDate.getFullYear();
     const reachMonth = this.savingPlan.reachDate.getMonth();
 
-    this.savingPlan.monthTotal = reachMonth - currentMonth + 1 + (reachYear - currentYear) * 12;
+    this.savingPlan.monthTotal = new BigNumber(reachMonth - currentMonth + 1 + (reachYear - currentYear) * 12);
     this.onChangeAmount(this.savingPlan.amount);
 
     this.isChangeMonthDisabled = this.savingPlan.reachDate.getTime() <= this.currentDate.getTime();

@@ -1,6 +1,7 @@
 import { Directive, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import { CurrencyPipe } from '@angular/common';
 import { MONEY_REGEX } from '../constants/regex.constant';
+import { BigNumber } from '../data-types/big-number';
+import { CommonUtil } from '../utils/common.util';
 
 export const CURRENCY_PIPE_DISPLAY = '';
 export const CURRENCY_PIPE_DIGITS_INFO = '.2-2';
@@ -11,11 +12,11 @@ export const DECIMAL_INPUT_NUMBER = 2;
 })
 export class MoneyNumberOnlyDirective {
   @Input() currencyUnit: string = '';
-  @Input() inputValue: any = 0;
-  @Output() inputValueChange: EventEmitter<number> = new EventEmitter<number>();
+  @Input() inputValue: BigNumber = new BigNumber(0);
+  @Output() inputValueChange: EventEmitter<BigNumber> = new EventEmitter<BigNumber>();
 
-  constructor(private el: ElementRef, private currencyPipe: CurrencyPipe) {
-    this.el.nativeElement.value = this.transformEventValue();
+  constructor(private el: ElementRef) {
+    this.el.nativeElement.value = CommonUtil.formatMoney(this.inputValue.toString());
   }
 
   @HostListener('input', ['$event']) onInputChange(event: any): void {
@@ -23,31 +24,24 @@ export class MoneyNumberOnlyDirective {
   }
 
   @HostListener('focusin', ['$event']) onInputFocusin(): void {
-    this.el.nativeElement.value = this.inputValue || '';
+    const inputValue = this.inputValue.toString();
+    this.el.nativeElement.value = inputValue !== '0' ? inputValue : '';
   }
 
   @HostListener('focusout', ['$event']) onInputFocusout(): void {
-    this.el.nativeElement.value = this.transformEventValue();
-  }
-
-  private transformEventValue(): string {
-    return this.currencyPipe.transform(
-      this.inputValue || 0,
-      this.currencyUnit,
-      CURRENCY_PIPE_DISPLAY,
-      +this.inputValue % 1 !== 0 ? CURRENCY_PIPE_DIGITS_INFO : '.0-0',
-    )!;
+    this.el.nativeElement.value = CommonUtil.formatMoney(this.inputValue.toString());
   }
 
   private updateValue(value: string): void {
     if ((!isNaN(+value) && MONEY_REGEX.test(value)) || value === '') {
-      this.inputValue = value;
-      const inputByDotArr = this.inputValue.split('.');
+      const inputByDotArr = this.inputValue.toString().split('.');
       if (inputByDotArr[1]?.length > DECIMAL_INPUT_NUMBER) {
-        this.inputValue = this.inputValue.slice(0, DECIMAL_INPUT_NUMBER - inputByDotArr[1].length);
+        this.inputValue = new BigNumber(value.slice(0, DECIMAL_INPUT_NUMBER - inputByDotArr[1].length));
+      } else {
+        this.inputValue = new BigNumber(value);
       }
     }
-    this.el.nativeElement.value = this.inputValue;
-    this.inputValueChange.emit(+this.inputValue);
+    this.el.nativeElement.value = this.inputValue.toString();
+    this.inputValueChange.emit(this.inputValue);
   }
 }

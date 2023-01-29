@@ -95,6 +95,20 @@ describe('SavingPlanDetailComponent', () => {
     });
   });
 
+  describe('onChangeReachDate', () => {
+    it('should update monthTotal', () => {
+      component.currentDate = new Date('2023-01-29');
+      component.onChangeReachDate(new Date('2025-09-01'));
+      expect(component.savingPlan.monthTotal).toEqual(33);
+    });
+
+    it('should call onChangeAmount method', () => {
+      spyOn(component, 'onChangeAmount');
+      component.onChangeReachDate(new Date());
+      expect(component.onChangeAmount).toHaveBeenCalled();
+    });
+  });
+
   describe('onChangeHiddenDateSwitch', () => {
     it('should call onChangeMonth with parameter -1', () => {
       spyOn(component, 'onChangeMonth');
@@ -114,7 +128,7 @@ describe('SavingPlanDetailComponent', () => {
   });
 
   describe('onConfirm', () => {
-    it('should call success method of NzModalService', () => {
+    it('should call success method success of NzModalService', () => {
       spyOn(component['modal'], 'success');
       component.onConfirm();
       expect(component['modal'].success).toHaveBeenCalled();
@@ -124,6 +138,7 @@ describe('SavingPlanDetailComponent', () => {
   describe('disabledDate', () => {
     it('should return true', () => {
       const newDate = new Date();
+      newDate.setDate(1);
       newDate.setDate(newDate.getDate() - 1);
       expect(component.disabledDate(newDate)).toEqual(true);
     });

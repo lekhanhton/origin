@@ -83,6 +83,7 @@
       font-weight: bold;
       color: #0079ff;
       margin-top: -12px;
+      word-break: break-all;
     }
 
     .monthly-amount__value.float-end {
@@ -99,6 +100,7 @@
     border-top: none;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+    word-break: break-all;
   }
 
   .detail__action {
