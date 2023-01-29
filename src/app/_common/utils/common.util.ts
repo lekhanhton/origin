@@ -22,6 +22,10 @@ export class CommonUtil {
   }
 
   private static getFormatDecimalPart(inputValue: string = ''): string {
-    return inputValue;
+    if (!inputValue.length) {
+      return inputValue;
+    }
+    const newValue = inputValue.slice(0, 2);
+    return newValue.length > 1 ? newValue : newValue + '0';
   }
 }
