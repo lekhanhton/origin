@@ -124,6 +124,7 @@ describe('SavingPlanDetailComponent', () => {
   describe('disabledDate', () => {
     it('should return true', () => {
       const newDate = new Date();
+      newDate.setDate(1);
       newDate.setDate(newDate.getDate() - 1);
       expect(component.disabledDate(newDate)).toEqual(true);
     });
