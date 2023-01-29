@@ -57,6 +57,7 @@ describe('SavingPlanDetailComponent', () => {
 
   describe('onChangeMonth', () => {
     const reachDate = new Date();
+    reachDate.setDate(1);
     reachDate.setHours(0, 0, 0, 0);
 
     it(`should not update reach date`, () => {

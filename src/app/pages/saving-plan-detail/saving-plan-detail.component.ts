@@ -57,7 +57,9 @@ export class SavingPlanDetailComponent implements OnInit, AfterViewChecked {
   ) {}
 
   ngOnInit(): void {
+    this.currentDate.setDate(1);
     this.currentDate.setHours(0, 0, 0, 0);
+    this.savingPlan.reachDate.setDate(1);
     this.savingPlan.reachDate.setHours(0, 0, 0, 0);
   }
 
@@ -88,11 +90,13 @@ export class SavingPlanDetailComponent implements OnInit, AfterViewChecked {
 
   onChangeReachDate(date: Date) {
     const currentDate = new Date();
+    currentDate.setDate(1);
     currentDate.setHours(0, 0, 0, 0);
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth();
 
     this.savingPlan.reachDate = new Date(date);
+    this.savingPlan.reachDate.setDate(1);
     this.savingPlan.reachDate.setHours(0, 0, 0, 0);
     const reachYear = this.savingPlan.reachDate.getFullYear();
     const reachMonth = this.savingPlan.reachDate.getMonth();

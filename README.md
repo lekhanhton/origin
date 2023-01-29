@@ -1,16 +1,29 @@
 # Origin
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.0.
+<p>Origin is a platform that helps user put financial lives on track. One key to financial well-being is planning & saving
+for your goals. Users can have many saving goals (e.g. go to college or throw a wedding party)...</p>
+
+## This is the Saving Goal Plan Simulation Screen
+
+![](/readme-images/origin-desktop.png)
+![](/readme-images/origin-mobile.png)
+
+<p><b>The app will simulate saving towards the "Buy a house" savings goal. Having some characteristics:</b></p>
+<ul>
+  <li>Simple design and easy to use</li>
+  <li>Compatible both on desktop and mobile</li>
+  <li>Currency dynamic based on timezone</li>
+</ul>
+
+<br><b>How it works:</b> </br> The app have two input components that is Saving money total and Month of target, I call
+them
+are Total amount and Reach goal by. When you change one of them the app will auto update and show you monthly money and
+month total that you wanna save.</p>
 
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you
 change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also
-use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ## Build
 
@@ -21,8 +34,3 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 Run `ng test --no-watch --code-coverage` to generate a coverage report.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out
-the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
