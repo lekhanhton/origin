@@ -14,6 +14,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
 import { MoneyNumberOnlyDirective } from './directives/money-number-only.directive';
+import { FormatMoneyPipe } from './pipes/format-money.pipe';
 
 const CoreModule = [CommonModule, FormsModule, RouterModule];
 
@@ -32,12 +33,14 @@ const ThirdPartyModule = [
 
 const directives = [MoneyNumberOnlyDirective];
 
+const pipes = [FormatMoneyPipe];
+
 const providers = [CurrencyPipe];
 
 @NgModule({
-  declarations: [...directives],
+  declarations: [...directives, ...pipes],
   imports: [...CoreModule, ...ThirdPartyModule],
-  exports: [...CoreModule, ...ThirdPartyModule, ...directives],
-  providers: [...providers],
+  exports: [...CoreModule, ...ThirdPartyModule, ...directives, ...pipes],
+  providers: [...providers, ...pipes],
 })
 export class AppCommonModule {}

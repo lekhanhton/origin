@@ -1,7 +1,10 @@
+import { BigNumber } from '../data-types/big-number';
+
 export interface ISavingPlan {
-  amount: number;
+  amount: BigNumber;
   reachDate: Date;
-  monthTotal: number;
+  monthTotal: BigNumber;
+  monthlyAmount: BigNumber;
   countryCode: string;
   currencyCode: string;
   currencySymbol: string;

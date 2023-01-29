@@ -1,18 +1,5 @@
-:host {
-  display: flex;
-  text-rendering: optimizeLegibility;
-  font-family: 'Work Sans', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #1e2a32;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 .pages-layout {
-  height: 100vh;
-  overflow-y: hidden;
+  height: 100%;
 
   .ant-layout-header {
     height: 80px;
@@ -29,6 +16,10 @@
         margin-left: 56px;
       }
     }
+  }
+
+  .ant-layout-content {
+    overflow-y: auto;
   }
 }
 

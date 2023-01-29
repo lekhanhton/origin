@@ -1,11 +1,10 @@
 .saving-plan-detail {
-  margin: 0 auto;
+  margin: 48px auto;
   max-width: 560px;
 
   .detail__welcome {
     text-align: center;
     color: #1b31a8;
-    margin-top: 48px;
     font-size: 20px;
   }
 
@@ -83,6 +82,8 @@
       font-weight: bold;
       color: #0079ff;
       margin-top: -12px;
+      word-break: break-all;
+      font-family: "Rubik", sans-serif;
     }
 
     .monthly-amount__value.float-end {
@@ -99,6 +100,7 @@
     border-top: none;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+    word-break: break-all;
   }
 
   .detail__action {

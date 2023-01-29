@@ -25,7 +25,6 @@
             class="amount"
             id="amount"
             inputmode="numeric"
-            maxlength="15"
             moneyNumberOnly
             nz-input
             type="text"
@@ -73,7 +72,7 @@
         {{ 'SAVING_PLAN_DETAIL.MONTHLY_AMOUNT' | translate }}
       </span>
       <span #monthlyAmountValueElem [class.float-end]="!isBreakLine" class="monthly-amount__value">
-        {{ monthlyAmount | currency : savingPlan.currencyCode : 'symbol' : monthlyAmountDigit }}
+        {{ savingPlan.currencySymbol + (savingPlan.monthlyAmount.toString() | formatMoney) }}
       </span>
     </div>
     <div
@@ -82,7 +81,7 @@
           | translate
             : {
                 monthTotal: savingPlan.monthTotal,
-                amount: savingPlan.amount | currency : savingPlan.currencyCode : 'symbol' : amountDigit,
+                amount: savingPlan.currencySymbol + (savingPlan.amount.toString() | formatMoney),
                 reachDate: savingPlan.reachDate | date : 'MMMM y'
               }
       "
