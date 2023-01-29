@@ -16,9 +16,10 @@ for your goals. Users can have many saving goals (e.g. go to college or throw a 
 </ul>
 
 <br><b>How it works:</b> </br> The app have two input components that is Saving money total and Month of target, I call
-them
-are Total amount and Reach goal by. When you change one of them the app will auto update and show you monthly money and
-month total that you wanna save.</p>
+them are Total amount and Reach goal by. When you change one of them the app will auto update and show you monthly money
+and month total that you wanna save.</p>
+
+<b>Technologies used: </b></br>Angular, Ant Design, Boostrap, countries-and-timezones library
 
 ## Development server
 
