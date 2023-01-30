@@ -22,8 +22,16 @@ and month total that you wanna save.</p>
 
 <b>Technologies used: </b></br>Angular, Ant Design, Boostrap, countries-and-timezones library
 
-## Development server
+## System requirement
 
+Node v14.15 or later
+
+## How to run app
+
+<b>1. Install node modules </b></br>
+Run `npm i` 
+
+<b>2. Start app</b></br>
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you
 change any of the source files.
 
